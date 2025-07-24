@@ -1397,6 +1397,11 @@
                                                         </b:EventTrigger>
                                                     </b:Interaction.Triggers>
                                                     <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                                                        <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                                                            <Image.RenderTransform>
+                                                                <ScaleTransform ScaleY="-1"></ScaleTransform>
+                                                            </Image.RenderTransform>
+                                                        </Image>
                                                         <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedBackground.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
                                                     </StackPanel>
                                                     <StackPanel x:Name="selectedBackgroundDescription" Orientation="Horizontal" DockPanel.Dock="Top">
@@ -1412,6 +1417,7 @@
                                                         </ContentControl>
                                                     </StackPanel>
                                                     <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+                                                        <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
                                                         <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="700" Height="Auto"  Margin="0,20,0,0">
                                                             <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
                                                             <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
