@@ -8,55 +8,46 @@
 					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
-      <ControlTemplate x:Key="subClassSelectionTemplate" DockPanel="{ Binding DockPanel }">
+      <ControlTemplate x:Key="subClassSelectionTemplate">
+          <DockPanel>
+              <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                      <Image.RenderTransform>
+                          <ScaleTransform ScaleY="-1"></ScaleTransform>
+                      </Image.RenderTransform>
+                  </Image>
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
+              </StackPanel>
+              <StackPanel x:Name="selectedSubclassDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                  <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
+                    <ListBox x:Name="SubclassesListBox" ItemTemplate="{StaticResource ClassIconTemplate}" ItemsSource="{Binding SelectableSubClasses}" SelectedItem="{Binding SelectedSubClass}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}"/> <!--  Margin="0,40,0,0" -->
 
-        <StackPanel x:Name="subClassCarouselAndDescription_inner" Orientation="Horizontal" DockPanel.Dock="Top">
-
-            <ListBox x:Name="subclassCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableSubClasses}" SelectedItem="{Binding SelectedSubClass}">
-              <ListBox.ItemTemplate>
-                  <DataTemplate>
-                      <Image x:Name="classIcon" Style="{StaticResource ClassIconStyle}" Stretch="None"/>
-                      <DataTemplate.Triggers>
-                          <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                              <Setter TargetName="classIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                              <Setter TargetName="classIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                              <Setter TargetName="classIcon" Property="Stretch" Value="Uniform"/>
-                              <Setter TargetName="classIcon" Property="Opacity" Value="0.9"/>
-                              <Setter TargetName="classIcon" Property="Effect">
-                                  <Setter.Value>
-                                      <ls:SaturationEffect Saturation="0.6"/>
-                                  </Setter.Value>
-                              </Setter>
-                          </DataTrigger>
-                      </DataTemplate.Triggers>
-                  </DataTemplate>
-              </ListBox.ItemTemplate>
-            </ListBox>
-
-            <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-            </ContentControl>
-
-        </StackPanel>
+                  </ScrollViewer>
+                  <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
+                      <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+                  </ContentControl>
+              </StackPanel>
+        </DockPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="subClassProgressionsTemplate">
+        <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+            <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="700" Height="Auto"  Margin="0,20,0,0">
+                <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                    <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubClassProgression}" HorizontalAlignment="Center"/>
 
-        <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubClassProgression}" HorizontalAlignment="Center"/>
-
-            </StackPanel>
-        </ScrollViewer>
-
+                    <ItemsControl ItemsSource="{Binding ClassProgressionDetails.SubPassiveSelectors}" ItemTemplate="{StaticResource progressionPassiveSelectors}" ItemContainerStyle="{StaticResource UpdateStateItemStyle}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
     </ControlTemplate>
+
 </ResourceDictionary>
