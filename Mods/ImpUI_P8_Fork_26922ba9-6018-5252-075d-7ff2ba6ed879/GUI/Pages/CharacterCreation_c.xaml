@@ -1189,7 +1189,7 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                                <DockPanel>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1198,9 +1198,11 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <Control Template="{StaticResource deitySelectionTemplate}"/>
+                                                    <StackPanel x:Name="backgroundCarouselAndDescription" DockPanel.Dock="Top">
+                                                        <Control Template="{StaticResource deitySelectionTemplate}"/>
+                                                    </StackPanel>
 
-                                                </StackPanel>
+                                                </DockPanel>
 
                                             </ControlTemplate>
                                         </Setter.Value>

@@ -8,31 +8,41 @@
 					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
-      <ControlTemplate x:Key="deitySelectionTemplate" DockPanel="{ Binding DockPanel }">
+      <ControlTemplate x:Key="deitySelectionTemplate">
+          <DockPanel>
+              <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                      <Image.RenderTransform>
+                          <ScaleTransform ScaleY="-1"></ScaleTransform>
+                      </Image.RenderTransform>
+                  </Image>
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
+              </StackPanel>
+              <StackPanel x:Name="selectedBackgroundDescription" Orientation="Vertical" DockPanel.Dock="Top">
+                  <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"  VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
 
-        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-          <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                      <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                          <ListBox x:Name="deityListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
+                              <ListBox.Resources>
+                                  <Style x:Key="CustomIconStyle" BasedOn="{StaticResource DeityIconStyle}" TargetType="Rectangle"/>
+                              </ListBox.Resources>
+                          </ListBox>
+                      </StackPanel>
 
-              <ListBox x:Name="deityCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}">
-                  <ListBox.ItemTemplate>
-                      <DataTemplate>
-                          <Rectangle x:Name="deityIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource DeityIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                          <DataTemplate.Triggers>
-                              <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                  <Setter TargetName="deityIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                  <Setter TargetName="deityIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                  <Setter TargetName="deityIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                  <Setter TargetName="deityIcon" Property="Opacity" Value="0.8"/>
-                              </DataTrigger>
-                          </DataTemplate.Triggers>
-                      </DataTemplate>
-                  </ListBox.ItemTemplate>
-              </ListBox>
+                  </ScrollViewer>
+              </StackPanel>
+              <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
+              </StackPanel>
+         </DockPanel>
+     </ControlTemplate>
 
-              <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-
-          </StackPanel>
-      </ScrollViewer>
+    <ControlTemplate x:Key="deityDescriptionTemplate">
+      <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+          <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
+          <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
+      </StackPanel>
     </ControlTemplate>
 
 </ResourceDictionary>

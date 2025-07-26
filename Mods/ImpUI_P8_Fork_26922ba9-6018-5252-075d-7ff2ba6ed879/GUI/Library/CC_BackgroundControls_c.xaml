@@ -8,40 +8,38 @@
 					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
-      <ControlTemplate x:Key="backgroundSelectionTemplate" DockPanel="{ Binding DockPanel }">
-          <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-              <ListBox x:Name="backgroundCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Rectangle x:Name="backgroundIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource BackgroundIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                <Setter TargetName="backgroundIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                <Setter TargetName="backgroundIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                <Setter TargetName="backgroundIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                <Setter TargetName="backgroundIcon" Property="Opacity" Value="0.8"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.BackgroundDescription}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
+      <ControlTemplate x:Key="backgroundSelectionTemplate">
+        <DockPanel>
+          <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+            <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleY="-1"></ScaleTransform>
+                </Image.RenderTransform>
+            </Image>
+            <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedBackground.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
         </StackPanel>
+        <StackPanel x:Name="selectedBackgroundDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
+                <ListBox x:Name="backgroundListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableBackgrounds}" SelectedItem="{Binding SelectedBackground}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
+                    <ListBox.Resources>
+                        <Style x:Key="CustomIconStyle" BasedOn="{StaticResource BackgroundIconStyle}" TargetType="Rectangle"/>
+                    </ListBox.Resources>
+                </ListBox>
+            </ScrollViewer>
+            <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
+                <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedBackground.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+            </ContentControl>
+        </StackPanel>
+        </DockPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="backgroundProgressionsTemplate">
-
-        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
-
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=BackgroundProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=BackgroundProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
-
-            </StackPanel>
-        </ScrollViewer>
+      <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+          <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
+          <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="700" Height="Auto"  Margin="0,20,0,0">
+              <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
+              <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.BackgroundProgression}" HorizontalAlignment="Center"/>
+          </ScrollViewer>
+      </StackPanel>
     </ControlTemplate>
 </ResourceDictionary>
