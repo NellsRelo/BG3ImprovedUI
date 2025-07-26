@@ -38,11 +38,4 @@
          </DockPanel>
      </ControlTemplate>
 
-    <ControlTemplate x:Key="deityDescriptionTemplate">
-      <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
-          <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
-          <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-      </StackPanel>
-    </ControlTemplate>
-
 </ResourceDictionary>
