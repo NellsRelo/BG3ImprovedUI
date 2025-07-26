@@ -20,7 +20,7 @@
             </StackPanel>
             <StackPanel x:Name="selectedSubRaceDescription" Orientation="Horizontal" DockPanel.Dock="Top">
                 <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
-                  <ListBox x:Name="raceListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
+                  <ListBox x:Name="subRaceListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
                       <ListBox.Resources>
                           <Style x:Key="CustomIconStyle" BasedOn="{StaticResource RaceIconStyle}" TargetType="Rectangle"/>
                       </ListBox.Resources>
