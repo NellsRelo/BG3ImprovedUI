@@ -8,52 +8,51 @@
 					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
 					mc:Ignorable="d">
 
-      <ControlTemplate x:Key="subRaceSelectionTemplate" DockPanel="{ Binding DockPanel }">
-
-        <StackPanel x:Name="raceCarouselAndDescription_inner" Orientation="Horizontal" DockPanel.Dock="Top">
-            <ListBox x:Name="subraceCarousel" Template="{StaticResource AnimatedIconCarouselTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Rectangle x:Name="raceIcon" Fill="{StaticResource CCIconSelectedPad}" Style="{StaticResource RaceIconStyle}" Width="{StaticResource SelectedCarouselIconSize}" Height="{StaticResource SelectedCarouselIconSize}"/>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="False">
-                                <Setter TargetName="raceIcon" Property="Width" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                <Setter TargetName="raceIcon" Property="Height" Value="{StaticResource UnselectedCarouselIconSize}"/>
-                                <Setter TargetName="raceIcon" Property="Fill" Value="{StaticResource CCIconDefault}"/>
-                                <Setter TargetName="raceIcon" Property="Opacity" Value="0.8"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-          <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-              <TextBlock ls:TextBlockFormatter.SourceText="{Binding DummyCharacter.Stats.Race.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-          </ContentControl>
-
-        </StackPanel>
+      <ControlTemplate x:Key="subRaceSelectionTemplate">
+        <DockPanel>
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleY="-1"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
+            </StackPanel>
+            <StackPanel x:Name="selectedSubRaceDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
+                  <ListBox x:Name="raceListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
+                      <ListBox.Resources>
+                          <Style x:Key="CustomIconStyle" BasedOn="{StaticResource RaceIconStyle}" TargetType="Rectangle"/>
+                      </ListBox.Resources>
+                  </ListBox>
+                </ScrollViewer>
+                <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
+                    <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+                </ContentControl>
+            </StackPanel>
+      </DockPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="subRaceProgressionsTemplate">
+      <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
+          <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
+          <TextBlock Text="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
+          <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="600" Height="Auto"  Margin="0,20,0,0">
+              <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
 
-        <Control Template="{StaticResource featuresGainedSubHeader}" HorizontalAlignment="Left" DockPanel.Dock="Top"/>
+                  <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+                  <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceSpellSelectors}" ItemTemplate="{StaticResource SpellSelectorPreviewTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-        <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-            <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+                  <!-- MOD START - Racial passive selection -->
+                  <ItemsControl x:Name="racePassives" ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveFeatures}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,20,0,0"/>
+                  <ItemsControl x:Name="racePassiveSelectors" ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveSelectors}" ItemTemplate="{StaticResource ProgressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}" Margin="0,20,0,0"/>
+                  <!-- MOD END -->
 
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+                  <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubRaceProgression}" HorizontalAlignment="Center"/>
 
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRaceSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubRaceSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-
-                <!-- MOD START - Racial passive selection -->
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=RacePassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
-                <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubRacePassiveSelectors}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubRacePassiveSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
-                <!-- MOD END -->
-
-                <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubRaceProgression}" HorizontalAlignment="Center"/>
-
-            </StackPanel>
-        </ScrollViewer>
+              </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
 
     </ControlTemplate>
 </ResourceDictionary>
