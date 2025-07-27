@@ -32,6 +32,7 @@
               <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_AbilityControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_Overrides_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
@@ -1120,7 +1121,12 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <DockPanel>
+                                              <DockPanel LastChildFill="True">
+                                                <Grid>
+                                                  <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                  </Grid.RowDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1129,13 +1135,13 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top"  Grid.Row="0">
                                                       <Control Template="{StaticResource subRaceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource subRaceProgressionsTemplate}"/>
-
-                                                </DockPanel>
+                                                    <Control Template="{StaticResource subRaceProgressionsTemplate}"  Grid.Row="1"/>
+                                                </Grid>
+                                              </DockPanel>
 
                                             </ControlTemplate>
                                         </Setter.Value>

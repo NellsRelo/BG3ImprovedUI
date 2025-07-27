@@ -19,9 +19,6 @@
                   <ListBox Template="{StaticResource SelectableCarouselTemplate}"
                            ItemsSource="{Binding SelectableRaces}" SelectedItem="{Binding SelectedRace}" Margin="0,45,0,0" />
 
-                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Name}"
-                             Style="{StaticResource PanelHeaderText}" TextAlignment="Center"
-                             Visibility="{Binding Path=SelectableSubRaces.Count, Converter={StaticResource CountToVisibilityConverter}}"/>
               </StackPanel>
 
               <StackPanel x:Name="selectedSubRaceDescription" Orientation="Horizontal" DockPanel.Dock="Top"
