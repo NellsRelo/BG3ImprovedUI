@@ -1096,6 +1096,10 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="*" />
                                                   </Grid.RowDefinitions>
+                                                  <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{StaticResource gameplayPanelWidth}" />
+                                                    <ColumnDefinition Width="*" />
+                                                  </Grid.ColumnDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1104,12 +1108,14 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Row="0">
+                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
                                                         <Control Template="{StaticResource raceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource raceProgressionsTemplate}" Grid.Row="1"/>
+                                                    <Control Template="{StaticResource raceProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
 
+
+                                                  <Control Template="{StaticResource raceDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-250,200,0,0"/>
                                                 </Grid>
                                                 </DockPanel>
                                             </ControlTemplate>

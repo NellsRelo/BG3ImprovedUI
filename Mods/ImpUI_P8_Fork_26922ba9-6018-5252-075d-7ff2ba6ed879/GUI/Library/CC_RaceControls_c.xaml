@@ -34,12 +34,21 @@
                         </ListBox.Resources>
                     </ListBox>
                   </ScrollViewer>
-                  <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,-45,0,0">
+                  <!-- <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,-45,0,0">
                       <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                  </ContentControl>
+                  </ContentControl> -->
               </StackPanel>
           </DockPanel>
     </ControlTemplate>
+
+    <ControlTemplate x:Key="raceDescriptionTemplate">
+          <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top"
+                      Visibility="{Binding Path=SelectableSubRaces.Count, Converter={StaticResource CountToVisibilityConverter}}">
+              <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top">
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+              </ContentControl>
+          </StackPanel>
+  </ControlTemplate>
 
     <ControlTemplate x:Key="raceProgressionsTemplate">
           <Grid HorizontalAlignment="Left">
