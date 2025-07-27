@@ -1089,7 +1089,12 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <DockPanel>
+                                              <DockPanel LastChildFill="True">
+                                                <Grid>
+                                                  <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                  </Grid.RowDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1098,12 +1103,13 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                                                    <StackPanel x:Name="raceCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Row="0">
                                                         <Control Template="{StaticResource raceSelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                    <Control Template="{StaticResource raceProgressionsTemplate}"/>
+                                                    <Control Template="{StaticResource raceProgressionsTemplate}" Grid.Row="1"/>
 
+                                                </Grid>
                                                 </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
