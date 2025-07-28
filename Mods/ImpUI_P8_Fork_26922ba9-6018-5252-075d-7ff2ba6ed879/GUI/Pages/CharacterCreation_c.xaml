@@ -32,7 +32,6 @@
               <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_AbilityControls_c.xaml"/>
-              <ResourceDictionary Source="../Library/CC_Overrides_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
