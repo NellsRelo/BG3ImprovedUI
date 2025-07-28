@@ -18,7 +18,6 @@
                   </Image>
                   <ListBox Template="{StaticResource SelectableCarouselTemplate}"
                            ItemsSource="{Binding SelectableRaces}" SelectedItem="{Binding SelectedRace}" Margin="0,45,0,0" />
-
               </StackPanel>
 
               <StackPanel x:Name="selectedSubRaceDescription" Orientation="Horizontal" DockPanel.Dock="Top"
@@ -28,15 +27,13 @@
                                 DockPanel.Dock="Top" Margin="0,20,0,0">
                     <ListBox x:Name="subRaceListBox" ItemTemplate="{StaticResource CustomIconTemplate}"
                             ItemsSource="{Binding SelectableSubRaces}" SelectedItem="{Binding SelectedSubRace}"
-                            ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
+                            ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}"
+                            Style="{StaticResource gameplayIconGridStyle}">
                         <ListBox.Resources>
                             <Style x:Key="CustomIconStyle" BasedOn="{StaticResource RaceIconStyle}" TargetType="Rectangle"/>
                         </ListBox.Resources>
                     </ListBox>
                   </ScrollViewer>
-                  <!-- <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,-45,0,0">
-                      <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubRace.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                  </ContentControl> -->
               </StackPanel>
           </DockPanel>
     </ControlTemplate>

@@ -18,24 +18,43 @@
                   </Image>
                   <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
               </StackPanel>
-              <StackPanel x:Name="selectedBackgroundDescription" Orientation="Vertical" DockPanel.Dock="Top">
-                  <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"  VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"  DockPanel.Dock="Top" Margin="0,20,0,0">
+              <StackPanel x:Name="selectedSubRaceDescription" Orientation="Horizontal" DockPanel.Dock="Top">
+                  <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                                VerticalScrollBarVisibility="Auto" MaxHeight="1200" Height="Auto"
+                                DockPanel.Dock="Top" Margin="0,20,0,0">
 
-                      <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-                          <ListBox x:Name="deityListBox" ItemTemplate="{StaticResource CustomIconTemplate}" ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}">
-                              <ListBox.Resources>
-                                  <Style x:Key="CustomIconStyle" BasedOn="{StaticResource DeityIconStyle}" TargetType="Rectangle"/>
-                              </ListBox.Resources>
-                          </ListBox>
-                      </StackPanel>
+                      <ListBox x:Name="deityListBox" ItemTemplate="{StaticResource CustomIconTemplate}"
+                          ItemsSource="{Binding SelectableDeities}" SelectedItem="{Binding SelectedDeity}"
+                          ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}"
+                          Style="{StaticResource gameplayIconGridStyle}">
+                          <ListBox.Resources>
+                              <Style x:Key="CustomIconStyle" BasedOn="{StaticResource DeityIconStyle}" TargetType="Rectangle"/>
+                          </ListBox.Resources>
+                      </ListBox>
+              </ScrollViewer>
+              </StackPanel>
 
-                  </ScrollViewer>
-              </StackPanel>
-              <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
-                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
-                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,30,0,0"/>
-              </StackPanel>
-         </DockPanel>
+          </DockPanel>
      </ControlTemplate>
+
+    <ControlTemplate x:Key="deityDescriptionTemplate">
+          <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+              <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top">
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedDeity.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+              </ContentControl>
+          </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="deityProgressionsTemplate">
+          <Grid HorizontalAlignment="Left">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="0,-30,0,0" Height="108" HorizontalAlignment="Center" />
+              </StackPanel>
+          </Grid>
+    </ControlTemplate>
 
 </ResourceDictionary>

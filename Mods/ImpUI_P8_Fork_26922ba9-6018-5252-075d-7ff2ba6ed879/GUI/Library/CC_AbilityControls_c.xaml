@@ -9,6 +9,19 @@
 					mc:Ignorable="d">
 
     <ControlTemplate x:Key="abilitySelectionTemplate">
+          <DockPanel>
+              <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                      <Image.RenderTransform>
+                          <ScaleTransform ScaleY="-1"></ScaleTransform>
+                      </Image.RenderTransform>
+                  </Image>
+              </StackPanel>
+              <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                  <TextBlock Text="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
+                  <TextBlock Text="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
+                  <TextBlock Text="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
+              </StackPanel>
  
       <ScrollViewer x:Name="scrollBar" Style="{StaticResource gameplayPanelScrollViewerStyle}" ls:ScrollViewerHelper.VerticalScrollOffsetMargin="124">
           <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
@@ -64,7 +77,7 @@
 
             </StackPanel>
         </ScrollViewer>
-
+        </DockPanel>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" Value="True">
                 <Setter TargetName="useRecommendedText" Property="Foreground" Value="{StaticResource LS_selectedTextPad}"/>

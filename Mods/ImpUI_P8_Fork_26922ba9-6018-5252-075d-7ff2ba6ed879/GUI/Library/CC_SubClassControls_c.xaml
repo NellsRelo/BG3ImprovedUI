@@ -23,31 +23,42 @@
                     <ListBox x:Name="SubclassesListBox" ItemTemplate="{StaticResource ClassIconTemplate}" ItemsSource="{Binding SelectableSubClasses}" SelectedItem="{Binding SelectedSubClass}" ItemContainerStyle="{StaticResource CCIconTextListBoxItemStyle}" Style="{StaticResource gameplayIconGridStyle}"/> <!--  Margin="0,40,0,0" -->
 
                   </ScrollViewer>
-                  <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top" Margin="-50,90,0,0">
-                      <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
-                  </ContentControl>
               </StackPanel>
         </DockPanel>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="subClassDescriptionTemplate">
+          <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+              <ContentControl Template="{StaticResource PanelSideDescription}" VerticalAlignment="Top">
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedSubClass.Description}" Style="{StaticResource CarouselSideDescriptionText}"/>
+              </ContentControl>
+          </StackPanel>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="subClassProgressionsTemplate">
-        <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left">
-            <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,-60,0,0" Height="108" HorizontalAlignment="Center" />
-            <TextBlock Text="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
-            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" MaxHeight="600" Height="Auto"  Margin="0,20,0,0">
-                <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-                    <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubClassProgression}" HorizontalAlignment="Center"/>
+        <Grid HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="0,-30,0,0" Height="108" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Source='h230f60c6g161fg481bgbe52g42bc264618dd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource FeatureListHeaderText}"/>
+            </StackPanel>
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="0,-20,0,0">
+              <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}" VerticalAlignment="Stretch">
+                  <Control Template="{StaticResource progressionFeaturesList}" DataContext="{Binding ProgressionData.SubClassProgression}" HorizontalAlignment="Center"/>
 
-                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
+                  <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassProgressions}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassProgressions, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
+                  <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassPassiveFeatures}" ItemTemplate="{StaticResource progressionSpellsTemplate}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassPassiveFeatures, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-                    <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
+                  <ItemsControl ItemsSource="{Binding FilteredItems, ElementName=SubClassSpellSelectors}" ItemTemplate="{StaticResource progressionSpellSelectors}" Visibility="{Binding FilteredItems.Count, ElementName=SubClassSpellSelectors, Converter={StaticResource CountToVisibilityConverter}}"/>
 
-                    <ItemsControl ItemsSource="{Binding ClassProgressionDetails.SubPassiveSelectors}" ItemTemplate="{StaticResource progressionPassiveSelectors}" ItemContainerStyle="{StaticResource UpdateStateItemStyle}"/>
-                </StackPanel>
+                  <ItemsControl ItemsSource="{Binding ClassProgressionDetails.SubPassiveSelectors}" ItemTemplate="{StaticResource progressionPassiveSelectors}" ItemContainerStyle="{StaticResource UpdateStateItemStyle}"/>
+              </StackPanel>
             </ScrollViewer>
-        </StackPanel>
+        </Grid>
     </ControlTemplate>
 
 </ResourceDictionary>

@@ -1114,7 +1114,6 @@
 
                                                     <Control Template="{StaticResource raceProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
 
-
                                                   <Control Template="{StaticResource raceDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-250,200,0,0"/>
                                                 </Grid>
                                                 </DockPanel>
@@ -1158,21 +1157,32 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <DockPanel>
+                                                <DockPanel  LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                      <ColumnDefinition Width="{StaticResource gameplayPanelWidth}" />
+                                                      <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                         </b:EventTrigger>
                                                     </b:Interaction.Triggers>
 
-                                                    <Control Template="{StaticResource setGameplayCameraOffsets}"/>
+                                                      <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="classCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-                                                      <Control Template="{StaticResource classSelectionTemplate}"/>
-                                                    </StackPanel>
+                                                      <StackPanel x:Name="classCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource classSelectionTemplate}"/>
+                                                      </StackPanel>
 
-                                                    <Control Template="{StaticResource classProgressionsTemplate}"/>
+                                                      <Control Template="{StaticResource classProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
 
+                                                      <Control Template="{StaticResource classDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-200,200,0,0"/>
+                                                    </Grid>
                                                 </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -1183,19 +1193,30 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <DockPanel>
+                                                <DockPanel  LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                      <ColumnDefinition Width="{StaticResource gameplayPanelWidth}" />
+                                                      <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                         </b:EventTrigger>
                                                     </b:Interaction.Triggers>
 
-                                                    <StackPanel x:Name="subclassCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-                                                      <Control Template="{StaticResource subClassSelectionTemplate}"/>
-                                                    </StackPanel>
+                                                      <StackPanel x:Name="subclassCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource subClassSelectionTemplate}"/>
+                                                      </StackPanel>
 
-                                                    <Control Template="{StaticResource subClassProgressionsTemplate}"/>
+                                                      <Control Template="{StaticResource subClassProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
 
+                                                      <Control Template="{StaticResource subClassDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-200,200,0,0"/>
+                                                    </Grid>
                                                 </DockPanel>
 
                                             </ControlTemplate>
@@ -1207,7 +1228,16 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <DockPanel>
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                      <ColumnDefinition Width="{StaticResource gameplayPanelWidth}" />
+                                                      <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1216,11 +1246,15 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="backgroundCarouselAndDescription" DockPanel.Dock="Top">
+                                                    <StackPanel x:Name="deityCarouselAndDescription" Orientation="Horizontal" VerticalAlignment="Stretch"  DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
                                                         <Control Template="{StaticResource deitySelectionTemplate}"/>
                                                     </StackPanel>
 
-                                                </DockPanel>
+                                                    <Control Template="{StaticResource deityProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
+
+                                                    <Control Template="{StaticResource deityDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-200,200,0,0"/>
+                                                  </Grid>
+                                              </DockPanel>
 
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -1247,7 +1281,16 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                              <DockPanel>
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                      <ColumnDefinition Width="{StaticResource gameplayPanelWidth}" />
+                                                      <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
@@ -1256,12 +1299,14 @@
 
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top">
-                                                        <Control Template="{StaticResource backgroundSelectionTemplate}"/>
-                                                    </StackPanel>
+                                                      <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource backgroundSelectionTemplate}"/>
+                                                      </StackPanel>
 
-                                                    <Control Template="{StaticResource backgroundProgressionsTemplate}"/>
+                                                      <Control Template="{StaticResource backgroundProgressionsTemplate}" Grid.Column="0" Grid.Row="1"/>
 
+                                                      <Control Template="{StaticResource backgroundDescriptionTemplate}" Grid.Column="1" Grid.RowSpan="2" DockPanel.Dock="Top"  Margin="-200,200,0,0"/>
+                                                    </Grid>
                                                 </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -1278,12 +1323,7 @@
                                                                 <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                             </b:EventTrigger>
                                                         </b:Interaction.Triggers>
-                                                        <Control Template="{StaticResource setGameplayCameraOffsets}"/>
-                                                        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
-                                                            <TextBlock Text="{Binding Source='h711b5e8bgb67bg43f7gac08g36b2e2466acd', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
-                                                            <TextBlock Text="{Binding Source='hf135a2ddg8e74g44b6gb899ga96c2410d384', Converter={StaticResource TranslatedStringConverter}}"  Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,0,0,0"/>
-                                                            <TextBlock Text="{Binding Source='h0e1cbf9ege86fg4bebgb6e6g34aae0ab4460', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelDescriptionText}" MaxWidth="1100"  Margin="0,20,0,0"/>
-                                                        </StackPanel>
+                                                          <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
                                                           <Control Template="{StaticResource abilitySelectionTemplate}"/>
 
