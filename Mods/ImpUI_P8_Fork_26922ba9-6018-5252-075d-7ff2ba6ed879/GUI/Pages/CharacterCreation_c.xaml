@@ -32,6 +32,7 @@
               <ResourceDictionary Source="../Library/CC_DeityControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_BackgroundControls_c.xaml"/>
               <ResourceDictionary Source="../Library/CC_AbilityControls_c.xaml"/>
+              <ResourceDictionary Source="../Library/CC_SelectorControls_c.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Message box to ensure user wants to activate tutorials -->
@@ -354,7 +355,7 @@
                                     <Grid x:Name="tabNavigation" Tag="None">
                                         <b:Interaction.Triggers>
                                             <b:DataTrigger Binding="{Binding Tag, ElementName=tabNavigation}" Value="GoBack">
-                                                <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
+                                                <!-- <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/> -->
                                                 <b:ChangePropertyAction TargetName="tabNavigation" PropertyName="Tag" Value="None" />
                                             </b:DataTrigger>
                                         </b:Interaction.Triggers>
@@ -600,9 +601,9 @@
 
                                                     <b:Interaction.Triggers>
                                                         
-                                                        <b:DataTrigger Binding="{Binding ElementName=gamePlayPage, Path=IsVisible}" Value="True">
+                                                        <!-- <b:DataTrigger Binding="{Binding ElementName=gamePlayPage, Path=IsVisible}" Value="True">
                                                             <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
-                                                        </b:DataTrigger>
+                                                        </b:DataTrigger> -->
 
                                                         <!-- Only set if not in a subtab -->
                                                         <b:EventTrigger EventName="SelectionChanged">
@@ -681,7 +682,7 @@
                                                     <b:EventTrigger EventName="Click">
                                                         <b:ChangePropertyAction TargetName="gameplayTabs" PropertyName="SelectedIndex" Value="{Binding Tag, ElementName=tabBar}" />
                                                         <b:ChangePropertyAction TargetName="tabBar" PropertyName="Tag" Value="CanJumpToAppearance" />
-                                                        <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/>
+                                                        <!-- <b:InvokeCommandAction Command="{Binding SetupGameplayTabNavigation}" CommandParameter="{Binding ElementName=gameplayTabs}"/> -->
                                                     </b:EventTrigger>
                                                 </b:Interaction.Triggers>
                                             </ls:LSButton>
@@ -813,7 +814,7 @@
                                 </DataTrigger>
 
                                 <!-- Animated Tabs Backplate Width matching -->
-                                <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="race">
+                                <!-- <DataTrigger Binding="{Binding ElementName=gameplayTabs, Path=SelectedItem.Tag}" Value="race">
                                     <Setter TargetName="backplate" Property="Width">
                                         <Setter.Value>
                                             <MultiBinding Converter="{StaticResource AddMultipleConverter}">
@@ -856,7 +857,7 @@
                                             </MultiBinding>
                                         </Setter.Value>
                                     </Setter>
-                                </DataTrigger>
+                                </DataTrigger> -->
 
                                 <DataTrigger Binding="{Binding Tag, ElementName=tabBar}" Value="CanJumpToAppearance">
                                     <Setter TargetName="backFromAppearanceButton" Property="Visibility" Value="Collapsed"/>
@@ -1264,15 +1265,30 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <Control Template="{StaticResource spellPrepTemplate}">
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Loaded">
                                                             <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                                                         </b:EventTrigger>
                                                     </b:Interaction.Triggers>
-                                                </Control>
-                                            </ControlTemplate>
-                                        </Setter.Value>
+
+                                                    <Control Template="{StaticResource setGameplayCameraOffsets}"/>
+
+                                                    <StackPanel x:Name="spellPreperationScreen" Orientation="Horizontal" VerticalAlignment="Stretch"  DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource spellPrepTemplate}"/>
+                                                    </StackPanel>
+
+                                                    <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+
+                                                  </Grid>
+                                                </DockPanel>
+                                          </ControlTemplate>
+                                      </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
 
@@ -1337,11 +1353,23 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <Control Template="{StaticResource raceSkillProficiencyPanelTemplate}"/>
-                                                </StackPanel>
+                                                      <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" VerticalAlignment="Stretch" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource raceSkillProficiencyPanelTemplate}"/>
+                                                      </StackPanel>
+
+                                                      <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+
+                                                    </Grid>
+                                                </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -1351,11 +1379,23 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <Control Template="{StaticResource skillProficiencyPanelTemplate}"/>
-                                                </StackPanel>
+                                                      <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" VerticalAlignment="Stretch" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                          <Control Template="{StaticResource skillProficiencyPanelTemplate}"/>
+                                                      </StackPanel>
+
+                                                      <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+
+                                                    </Grid>
+                                                </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -1365,11 +1405,22 @@
                                     <Setter TargetName="gameplayPanel" Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate>
-                                                <StackPanel>
+                                                <DockPanel LastChildFill="True">
+                                                  <Grid>
+                                                    <Grid.RowDefinitions>
+                                                      <RowDefinition Height="Auto" />
+                                                      <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
                                                     <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
-                                                    <Control Template="{StaticResource skillExpertisePanelTemplate}"/>
-                                                </StackPanel>
+                                                    <StackPanel x:Name="backgroundCarouselAndDescription" Orientation="Horizontal" VerticalAlignment="Stretch" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                                                      <Control Template="{StaticResource skillExpertisePanelTemplate}"/>
+                                                    </StackPanel>
+
+                                                    <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+
+                                                  </Grid>
+                                                </DockPanel>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>

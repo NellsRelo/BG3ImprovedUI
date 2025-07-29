@@ -17,6 +17,7 @@
         <ResourceDictionary Source="/Core;component/Library/FocusableControls_c.xaml"/>
         <ResourceDictionary Source="/Core;component/Library/CCLib.xaml"/>
         <ResourceDictionary Source="/Core;component/Library/ControllerHints.xaml"/>
+        <ResourceDictionary Source="../Library/CC_SelectorControls_c.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <System:Single x:Key="TabsPanelHeight">130</System:Single>
@@ -886,13 +887,6 @@
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
-              <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
-                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
-                      <Image.RenderTransform>
-                          <ScaleTransform ScaleY="-1"></ScaleTransform>
-                      </Image.RenderTransform>
-                  </Image>
-              </StackPanel>
 
             <StackPanel DockPanel.Dock="Top" Margin="0,0,0,50">
 
@@ -934,11 +928,6 @@
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
-                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
-                      <Image.RenderTransform>
-                          <ScaleTransform ScaleY="-1"></ScaleTransform>
-                      </Image.RenderTransform>
-                  </Image>
 
             <ContentControl ContentTemplate="{DynamicResource PassiveSelectorItemTemplate}" Content="{Binding .}"/>
 
@@ -952,11 +941,6 @@
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
-                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
-                      <Image.RenderTransform>
-                          <ScaleTransform ScaleY="-1"></ScaleTransform>
-                      </Image.RenderTransform>
-                  </Image>
 
             <ContentControl ContentTemplate="{DynamicResource EquipmentSelectorItemTemplate}" Content="{Binding .}"/>
 
@@ -3758,11 +3742,6 @@
             <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
             <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
-                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleY="-1"></ScaleTransform>
-                    </Image.RenderTransform>
-                </Image>
                 <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h15329947gc691g4323gac0fge3fbcecb92d9', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
 
                 <StackPanel x:Name="PreparationHelp" Visibility="Collapsed">
@@ -4123,7 +4102,6 @@
                         <ScaleTransform ScaleY="-1"></ScaleTransform>
                     </Image.RenderTransform>
                 </Image>
-                <TextBlock ls:TextBlockFormatter.SourceText="{Binding SelectedClass.Name}" Style="{StaticResource PanelHeaderText}" TextAlignment="Center"/>
             </StackPanel>
 
             <StackPanel DockPanel.Dock="Top">
@@ -4229,6 +4207,7 @@
     </Style>
 
     <ControlTemplate x:Key="raceSkillProficiencyPanelTemplate">
+        <StackPanel Orientation="Vertical">
         <Control Template="{StaticResource skillsSelectionTemplate}" DataContext="{Binding AllSkills.RaceProficientSkills}">
             <Control.Resources>
                 <ControlTemplate x:Key="skillsSelectionHeader">
@@ -4245,9 +4224,12 @@
                 </ControlTemplate>
             </Control.Resources>
         </Control>
+
+        </StackPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="skillProficiencyPanelTemplate">
+        <StackPanel Orientation="Vertical">
         <Control Template="{StaticResource skillsSelectionTemplate}" DataContext="{Binding AllSkills.ClassProficientSkills}">
             <Control.Resources>
                 <ControlTemplate x:Key="skillsSelectionHeader">
@@ -4264,9 +4246,12 @@
                 </ControlTemplate>
             </Control.Resources>
         </Control>
+
+        </StackPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="skillExpertisePanelTemplate">
+        <StackPanel Orientation="Vertical">
         <Control Template="{StaticResource skillsSelectionTemplate}" DataContext="{Binding AllSkills.ExpertiseSkills}">
             <Control.Resources>
                 <ControlTemplate x:Key="skillsSelectionHeader">
@@ -4283,6 +4268,8 @@
                 </ControlTemplate>
             </Control.Resources>
         </Control>
+
+        </StackPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="StandardBottomButtonsTemplate">

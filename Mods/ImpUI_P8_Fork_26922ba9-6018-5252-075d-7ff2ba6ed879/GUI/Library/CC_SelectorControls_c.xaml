@@ -1,0 +1,71 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+					xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:System="clr-namespace:System;assembly=mscorlib"
+					xmlns:ls="clr-namespace:ls;assembly=Code"
+					xmlns:noesis="clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"
+					mc:Ignorable="d">
+
+
+      <ControlTemplate x:Key="selectorClosingTemplate">
+          <Grid HorizontalAlignment="Left">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="0,-50,0,0" Height="108" HorizontalAlignment="Center" />
+              </StackPanel>
+          </Grid>
+      </ControlTemplate>
+
+    <DataTemplate x:Key="SpellSelectorItemTemplate">
+        <DockPanel x:Name="Base" Height="{StaticResource gameplayPanelHeightSplit}">
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleY="-1"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock x:Name="PanelHeader" ls:TextBlockFormatter.SourceText="{Binding Title}" Style="{StaticResource PanelHeaderText}"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock x:Name="SpellSelectorDescription" ls:TextBlockFormatter.SourceText="{Binding Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,50,0,0"/>
+
+                <TextBlock x:Name="SelectedTitle" ls:TextBlockFormatter.SourceText="{Binding Source='h46206b54gae33g4546ga5dfg13de4a4c66aa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
+                <ItemsControl x:Name="chosenSpells" ItemsSource="{Binding Additions}" ItemTemplate="{StaticResource removeableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="0,50,0,0" Width="{Binding Width, ElementName=base}"/>
+                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h76bfc212gcdd9g4c2ag899eg6bbeaf84f1e5', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
+            </StackPanel>
+
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                          VerticalScrollBarVisibility="Auto" MaxHeight="1200" Height="Auto"
+                          DockPanel.Dock="Top" Margin="0,20,0,0">
+                <!-- <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}"> -->
+                    <ItemsControl x:Name="availableSpells" ItemsSource="{Binding Available}" ItemTemplate="{StaticResource selectableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="-60,50,0,0" Width="{Binding Width, ElementName=base}"/>
+                <!-- </StackPanel> -->
+            </ScrollViewer>
+
+        </DockPanel>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsCantrips}" Value="True">
+                <Setter TargetName="SelectedTitle" Property="ls:TextBlockFormatter.SourceText" Value="{Binding Source='hc1b7e817gdd47g4f48g9d05gd8d8b0353160', Converter={StaticResource TranslatedStringConverter}}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsActions}" Value="True">
+                <Setter TargetName="SelectedTitle" Property="ls:TextBlockFormatter.SourceText" Value="{Binding Source='h346b7170gf25ag4c8dgbc45gb21b421b6833', Converter={StaticResource TranslatedStringConverter}}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsComplete}" Value="False">
+                <Setter TargetName="SelectedTitle" Property="Foreground" Value="{StaticResource CCTabToDo}"/>
+            </DataTrigger>
+            <!-- Split Screen variation -->
+            <DataTrigger Binding="{Binding Layout}" Value="Common">
+                <Setter TargetName="Base" Property="Height" Value="{StaticResource gameplayPanelHeight}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+
+    </DataTemplate>
+
+</ResourceDictionary>
