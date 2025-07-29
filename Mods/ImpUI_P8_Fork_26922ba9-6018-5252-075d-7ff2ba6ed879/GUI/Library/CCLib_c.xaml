@@ -922,16 +922,24 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type ls:VMCharacterCreationPassives}">
-        <StackPanel>
+        <DockPanel LastChildFill="True">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="Loaded">
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
+            <StackPanel x:Name="passiveSelectionAndDetails" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+              <ContentControl ContentTemplate="{DynamicResource PassiveSelectorItemTemplate}" Content="{Binding .}"/>
+            </StackPanel>
 
-            <ContentControl ContentTemplate="{DynamicResource PassiveSelectorItemTemplate}" Content="{Binding .}"/>
-
-        </StackPanel>
+            <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+          </Grid>
+        </DockPanel>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type ls:VMCharacterCreationEquipments}">
@@ -3850,7 +3858,15 @@
     </DataTemplate>
 
     <DataTemplate x:Key="PassiveSelectorItemTemplate">
-        <DockPanel x:Name="Base" Height="{StaticResource gameplayPanelHeightSplit}">
+        <DockPanel x:Name="Base">
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleY="-1"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+            </StackPanel>
+
             <StackPanel DockPanel.Dock="Top">
                 <TextBlock x:Name="title" ls:TextBlockFormatter.SourceText="{Binding Name}" Style="{StaticResource PanelHeaderText}"/>
 
@@ -3863,7 +3879,9 @@
                 </TextBlock>
             </StackPanel>
 
-            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                                VerticalScrollBarVisibility="Auto" MaxHeight="1200" Height="Auto"
+                                DockPanel.Dock="Top" Margin="0,20,0,0">
                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
 
                     <ItemsControl x:Name="SelectablePassiveItemsControl" ItemsSource="{Binding Passives}" ItemTemplate="{StaticResource SelectablePassiveTemplate}" Margin="0,40,0,0"/>
@@ -3877,9 +3895,9 @@
 
         <DataTemplate.Triggers>
             <!-- Split Screen variation -->
-            <DataTrigger Binding="{Binding Layout}" Value="Common">
+            <!-- <DataTrigger Binding="{Binding Layout}" Value="Common">
                 <Setter TargetName="Base" Property="Height" Value="{StaticResource gameplayPanelHeight}" />
-            </DataTrigger>
+            </DataTrigger> -->
             <DataTrigger Binding="{Binding Description.Text, Converter={StaticResource NullToBoolTrueConverter}, ConverterParameter='EmptyString'}" Value="True">
                 <Setter TargetName="description" Property="Visibility" Value="Collapsed" />
             </DataTrigger>
