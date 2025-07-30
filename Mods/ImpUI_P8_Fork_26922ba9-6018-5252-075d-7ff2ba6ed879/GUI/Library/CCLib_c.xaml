@@ -881,33 +881,51 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type ls:VMSpellSelector}">
-        <DockPanel x:Name="base" Width="1180" Height="{StaticResource gameplayPanelHeightSplit}">
+        <DockPanel x:Name="base" LastChildFill="True">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="Loaded">
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
+            <DockPanel Grid.Row="0">
+              <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                      <Image.RenderTransform>
+                          <ScaleTransform ScaleY="-1"></ScaleTransform>
+                      </Image.RenderTransform>
+                  </Image>
+              </StackPanel>
+              <StackPanel DockPanel.Dock="Top" Margin="0,0,0,50">
 
-            <StackPanel DockPanel.Dock="Top" Margin="0,0,0,50">
+                  <TextBlock x:Name="PanelHeader" ls:TextBlockFormatter.SourceText="{Binding Title}" Style="{StaticResource PanelHeaderText}"/>
+                  <TextBlock x:Name="SpellSelectorDescription" ls:TextBlockFormatter.SourceText="{Binding Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,50,0,0"/>
 
-                <TextBlock x:Name="PanelHeader" ls:TextBlockFormatter.SourceText="{Binding Title}" Style="{StaticResource PanelHeaderText}"/>
-                <TextBlock x:Name="SpellSelectorDescription" ls:TextBlockFormatter.SourceText="{Binding Description}" Style="{StaticResource PanelDescriptionText}" Margin="0,50,0,0"/>
+                  <TextBlock x:Name="SelectedTitle" ls:TextBlockFormatter.SourceText="{Binding Source='h46206b54gae33g4546ga5dfg13de4a4c66aa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
+                  <ItemsControl x:Name="chosenSpells" ItemsSource="{Binding Additions}" ItemTemplate="{StaticResource removeableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="0,50,0,0" Width="{Binding Width, ElementName=base}"/>
 
-                <TextBlock x:Name="SelectedTitle" ls:TextBlockFormatter.SourceText="{Binding Source='h46206b54gae33g4546ga5dfg13de4a4c66aa', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
-                <ItemsControl x:Name="chosenSpells" ItemsSource="{Binding Additions}" ItemTemplate="{StaticResource removeableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="0,50,0,0" Width="{Binding Width, ElementName=base}"/>
+                  <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h76bfc212gcdd9g4c2ag899eg6bbeaf84f1e5', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
 
-                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h76bfc212gcdd9g4c2ag899eg6bbeaf84f1e5', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0"/>
+              </StackPanel>
 
+              <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                            VerticalScrollBarVisibility="Auto" MaxHeight="800" Height="Auto"
+                            DockPanel.Dock="Top" Margin="0,20,0,0">
+                  <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
+
+                      <ItemsControl x:Name="availableSpells" ItemsSource="{Binding Available}" ItemTemplate="{StaticResource selectableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="-60,50,0,0" Width="{Binding Width, ElementName=base}"/>
+
+                  </StackPanel>
+              </ScrollViewer>
+            </DockPanel>
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Bottom" Grid.Row="1">
+                  <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="0,-50,0,0" Height="108" HorizontalAlignment="Center" />
             </StackPanel>
-
-            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}">
-                <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
-
-                    <ItemsControl x:Name="availableSpells" ItemsSource="{Binding Available}" ItemTemplate="{StaticResource selectableSpell}" Style="{StaticResource spellSelectorSpellListStyle}" Margin="-60,50,0,0" Width="{Binding Width, ElementName=base}"/>
-
-                </StackPanel>
-            </ScrollViewer>
-
+          </Grid>
         </DockPanel>
 
         <DataTemplate.Triggers>
