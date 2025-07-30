@@ -4187,7 +4187,9 @@
 
             </StackPanel>
 
-            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}" >
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                                VerticalScrollBarVisibility="Auto" MaxHeight="1200" Height="Auto"
+                                DockPanel.Dock="Top" Margin="0,20,0,0" >
                 <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
 
                     <Control Template="{DynamicResource selectableSkills}"/>
