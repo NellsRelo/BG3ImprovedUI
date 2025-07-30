@@ -3749,6 +3749,13 @@
 
             <Control Template="{StaticResource setGameplayCameraOffsets}"/>
 
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleY="-1"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+            </StackPanel>
             <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
                 <TextBlock ls:TextBlockFormatter.SourceText="{Binding Source='h15329947gc691g4323gac0fge3fbcecb92d9', Converter={StaticResource TranslatedStringConverter}}" Style="{StaticResource PanelHeaderText}"/>
 
