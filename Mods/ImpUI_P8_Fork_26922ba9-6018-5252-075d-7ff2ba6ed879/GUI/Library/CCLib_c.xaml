@@ -943,16 +943,24 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type ls:VMCharacterCreationEquipments}">
-        <StackPanel>
+        <DockPanel LastChildFill="True">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="Loaded">
                     <ls:SetMoveFocusAction TargetName="CharacterCreation_c"/>
                 </b:EventTrigger>
             </b:Interaction.Triggers>
+                <StackPanel x:Name="passiveSelectionAndDetails" Orientation="Horizontal" DockPanel.Dock="Top" Grid.Column="0" Grid.Row="0">
+                    <ContentControl ContentTemplate="{DynamicResource EquipmentSelectorItemTemplate}" Content="{Binding .}"/>
+                </StackPanel>
 
-            <ContentControl ContentTemplate="{DynamicResource EquipmentSelectorItemTemplate}" Content="{Binding .}"/>
-
-        </StackPanel>
+            <Control Template="{StaticResource selectorClosingTemplate}" Grid.Column="0" Grid.Row="1"/>
+          </Grid>
+        </DockPanel>
     </DataTemplate>
 
     <Style x:Key="gameplayTabTextStyle" TargetType="TextBlock">
@@ -3931,64 +3939,81 @@
     </DataTemplate>
 
     <DataTemplate x:Key="EquipmentSelectorItemTemplate">
-        <StackPanel>
-            <TextBlock x:Name="title" ls:TextBlockFormatter.SourceText="{Binding Name}" Style="{StaticResource PanelHeaderText}"/>
+        <DockPanel x:Name="Base">
+            <StackPanel Width="{StaticResource gameplayPanelWidth}" HorizontalAlignment="Left" DockPanel.Dock="Top">
+                <Image Source="{StaticResource CarouselDecoration}" Stretch="None" Margin="25,98,0,-148" Height="108" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleY="-1"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+            </StackPanel>
 
-            <TextBlock x:Name="description" ls:TextBlockFormatter.SourceText="{Binding Description.Text}" Style="{StaticResource PanelDescriptionText}" Margin="0,20,0,0"/>
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock x:Name="title" ls:TextBlockFormatter.SourceText="{Binding Name}" Style="{StaticResource PanelHeaderText}"/>
 
-            <TextBlock Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0">
-                <Run Text="{Binding Source='ha831257cg1d13g4c00g8a55g00847dd17c51', Converter={StaticResource TranslatedStringConverter}}"/><Run Text="{Binding SelectedEquipmentCount, StringFormat=' {0}'}"/><Run Text="{Binding MaxSelectedEquipmentCount, StringFormat='/{0}'}"/>
-            </TextBlock>
+                <TextBlock x:Name="description" ls:TextBlockFormatter.SourceText="{Binding Description.Text}" Style="{StaticResource PanelDescriptionText}" Margin="0,20,0,0"/>
 
-            <ItemsControl x:Name="Equipments" ItemsSource="{Binding Equipments}" Margin="0,40,0,0">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="ls:VMCharacterCreationEquipment">
-                        <ContentControl Template="{StaticResource InteractiveListButtonTemplate}" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True" ToolTip="{StaticResource ManagedTooltip}">
-                            <Grid>
-                                <Grid Margin="24,12,0,12" Style="{StaticResource FeatureListItemIconHolder}">
-                                    <Image x:Name="iconImage" Width="96" Height="96">
-                                        <Image.Source>
-                                            <MultiBinding Converter="{StaticResource IconIdToSourceConverter}" ConverterParameter="{StaticResource FallBackPassiveIconPath}">
-                                                <Binding Source="Assets/Tooltips/ItemIcons/"/>
-                                                <Binding Path="IconName"/>
-                                            </MultiBinding>
-                                        </Image.Source>
-                                    </Image>
-                                </Grid>
+                <TextBlock Style="{StaticResource PanelSubHeaderText}" Margin="0,50,0,0">
+                    <Run Text="{Binding Source='ha831257cg1d13g4c00g8a55g00847dd17c51', Converter={StaticResource TranslatedStringConverter}}"/><Run Text="{Binding SelectedEquipmentCount, StringFormat=' {0}'}"/><Run Text="{Binding MaxSelectedEquipmentCount, StringFormat='/{0}'}"/>
+                </TextBlock>
+            </StackPanel>
 
-                                <TextBlock ls:TextBlockFormatter.SourceText="{Binding Name}" Style="{StaticResource FeatureListItemName}"/>
+            <ScrollViewer Style="{StaticResource gameplayPanelScrollViewerStyle}"
+                                VerticalScrollBarVisibility="Auto" MaxHeight="1200" Height="Auto"
+                                DockPanel.Dock="Top" Margin="0,20,0,0">
+                <StackPanel Style="{StaticResource gameplayScrolledStackPanelStyle}">
 
-                                <Image x:Name="tick" Visibility="Collapsed" Source="{StaticResource IconTick}" Stretch="None" HorizontalAlignment="Right" Margin="0,0,130,0"/>
+                    <ItemsControl x:Name="Equipments" ItemsSource="{Binding Equipments}" Margin="0,40,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="ls:VMCharacterCreationEquipment">
+                                <ContentControl Template="{StaticResource InteractiveListButtonTemplate}" x:Name="base" ls:MoveFocus.Focusable="True" Focusable="True" ToolTip="{StaticResource ManagedTooltip}">
+                                    <Grid>
+                                        <Grid Margin="24,12,0,12" Style="{StaticResource FeatureListItemIconHolder}">
+                                            <Image x:Name="iconImage" Width="96" Height="96">
+                                                <Image.Source>
+                                                    <MultiBinding Converter="{StaticResource IconIdToSourceConverter}" ConverterParameter="{StaticResource FallBackPassiveIconPath}">
+                                                        <Binding Source="Assets/Tooltips/ItemIcons/"/>
+                                                        <Binding Path="IconName"/>
+                                                    </MultiBinding>
+                                                </Image.Source>
+                                            </Image>
+                                        </Grid>
 
-                                <ls:LSButton x:Name="toggleSkill" BoundEvent="UIAccept" Visibility="Collapsed" IsEnabled="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" ContentTemplate="{StaticResource ControllerButtonHintImageOnly}" Command="{Binding DataContext.ToggleEquipment, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Content="{Binding DataContext.CurrentPlayer.UIData.InputEvents, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}, ConverterParameter=UIAccept, Converter={StaticResource FindInputEventConverter}}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="-50,-50,0,-50">
-                                    <b:Interaction.Triggers>
-                                        <b:EventTrigger EventName="LSInputBindingPressed">
-                                            <ls:LSPlaySound Sound="UI_DefaultButton_Click" />
-                                        </b:EventTrigger>
-                                    </b:Interaction.Triggers>
-                                </ls:LSButton>
+                                        <TextBlock ls:TextBlockFormatter.SourceText="{Binding Name}" Style="{StaticResource FeatureListItemName}"/>
 
-                            </Grid>
-                        </ContentControl>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Value}" Value="1.0">
-                                <Setter TargetName="tick" Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
+                                        <Image x:Name="tick" Visibility="Collapsed" Source="{StaticResource IconTick}" Stretch="None" HorizontalAlignment="Right" Margin="0,0,130,0"/>
 
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter TargetName="toggleSkill" Property="Visibility" Value="Visible"/>
-                            </MultiDataTrigger>
+                                        <ls:LSButton x:Name="toggleSkill" BoundEvent="UIAccept" Visibility="Collapsed" IsEnabled="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" ContentTemplate="{StaticResource ControllerButtonHintImageOnly}" Command="{Binding DataContext.ToggleEquipment, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}}" CommandParameter="{Binding}" Content="{Binding DataContext.CurrentPlayer.UIData.InputEvents, RelativeSource={RelativeSource AncestorType={x:Type ls:UIWidget}}, ConverterParameter=UIAccept, Converter={StaticResource FindInputEventConverter}}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="-50,-50,0,-50">
+                                            <b:Interaction.Triggers>
+                                                <b:EventTrigger EventName="LSInputBindingPressed">
+                                                    <ls:LSPlaySound Sound="UI_DefaultButton_Click" />
+                                                </b:EventTrigger>
+                                            </b:Interaction.Triggers>
+                                        </ls:LSButton>
 
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                    </Grid>
+                                </ContentControl>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Value}" Value="1.0">
+                                        <Setter TargetName="tick" Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
 
-        </StackPanel>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Enabled}" Value="True"/>
+                                            <Condition Binding="{Binding Path=(ls:MoveFocus.IsFocused), ElementName=base}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="toggleSkill" Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Description.Text, Converter={StaticResource NullToBoolTrueConverter}, ConverterParameter='EmptyString'}" Value="True">
                 <Setter TargetName="description" Property="Visibility" Value="Collapsed" />
